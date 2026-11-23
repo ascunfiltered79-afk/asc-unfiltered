@@ -2,7 +2,7 @@ export const DEMO_POSTS = [
   { id: 'example-1', kind: 'confession', nickname: 'Anonymous', body: 'My attendance is low but my chai-shop attendance is 100%. Priorities, I guess. ☕', created_at: '2026-11-20T12:00:00.000Z', sample: true },
   { id: 'example-2', kind: 'meme', nickname: 'Backbench Department', body: 'Group project breakdown: 1 person works, 3 people say “bro almost done?”, 5 people send reels. 💀', created_at: '2026-11-19T12:00:00.000Z', sample: true },
   { id: 'example-3', kind: 'tea', nickname: 'The Chai Committee', body: 'Campus tea of the day: the canteen table has heard more life plans than the career office. Purely a joke, of course.', created_at: '2026-11-18T12:00:00.000Z', sample: true },
-  { id: 'example-4', kind: 'question', nickname: 'Anonymous', body: 'Dear Mask, how do I explain to my friends that I came to actually attend the lecture?', created_at: '2026-11-17T12:00:00.000Z', sample: true },
+  { id: 'example-4', kind: 'question', nickname: 'Anonymous', body: 'Hey ASC crew, how do I explain to my friends that I came to actually attend the lecture?', created_at: '2026-11-17T12:00:00.000Z', sample: true },
   { id: 'example-5', kind: 'media', nickname: 'Campus Diary', body: 'The iconic Amar Singh College campus deserves its own main-character moment. 📸', media_url: 'assets/campus.webp', created_at: '2026-11-16T12:00:00.000Z', sample: true }
 ];
 export const DEMO_POLL = {
@@ -15,7 +15,7 @@ export const POST_TYPES = {
   confession: { label: 'CONFESSION', icon: '🤫', theme: 'pink' },
   meme: { label: 'MEME DROP', icon: '💀', theme: 'lime' },
   tea: { label: 'CAMPUS TEA', icon: '☕', theme: 'yellow' },
-  question: { label: 'ASK THE MASK', icon: '🎭', theme: 'blue' },
+  question: { label: 'ASK THE CREW', icon: '🎥', theme: 'blue' },
   media: { label: 'CAMPUS DIARY', icon: '🎥', theme: 'pink' }
 };
 export const DEMO_KEY = 'asc_unfiltered_demo_v1';
