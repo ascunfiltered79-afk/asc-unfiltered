@@ -1,123 +1,71 @@
-# ASC UNFILTERED — Behind The Mask 🎭
+# ASC UNFILTERED — MULTI-PAGE WEBSITE 🎭
 
-A mobile-friendly, unofficial, student-run website for Amar Singh College in Srinagar. Includes a masked-admin look, the real campus photo, memes and stories, a moderated confession vault, campus tea, anonymous questions, media links, polls, reports, and a private admin dashboard.
+This is a new version of ASC Unfiltered that uses **real separate HTML pages**. When someone clicks The Feed, their browser navigates from the homepage to `feed.html` instead of scrolling to a section of one giant page.
 
-**This is an unofficial community project. It is not operated by Amar Singh College.**
+## IMPORTANT: The exact GitHub layout
 
-## 1. Run the demo immediately
-
-No build step and no npm installation are required.
-
-**Simple method (VS Code):**
-1. Unzip the download.
-2. Open the `asc-unfiltered` folder in VS Code.
-3. Install the **Live Server** extension in VS Code (if needed).
-4. Right-click `index.html` → **Open with Live Server**.
-5. The public site appears. Open `admin.html` to test approving stories, adding posts and creating polls.
-
-**Or using Python (Windows/macOS):**
-
-```bash
-cd asc-unfiltered
-python -m http.server 8000
-```
-
-Visit `http://localhost:8000` and `http://localhost:8000/admin.html`.
-
-> Important: Until you connect Supabase, this is **DEMO MODE**. Submissions, votes and moderation are saved in the browser's `localStorage`. They are **not shared across devices** and the demo admin is **not password protected**. The example feed posts are clearly marked as examples. Do not invite students to use the demo for actual submissions.
-
-## 2. Publish the files to GitHub Pages
-
-1. Sign in to [github.com](https://github.com/).
-2. Choose **New repository**. Name it `asc-unfiltered` and set **Public**.
-3. Open the repo, select **Add file → Upload files**.
-4. **Unzip this ZIP first**, then upload **all files and folders inside** `asc-unfiltered` — including `index.html`, `admin.html`, `css`, `js`, `assets`, and `database`. Do not upload only the `.zip` file. `index.html` must be in the repository's root.
-5. Click **Commit changes**.
-6. Open **Settings → Pages**. Under Build and deployment, choose **Deploy from a branch**. Select `main` and `/ (root)`, then **Save**.
-7. Your website's URL will look like `https://YOUR-USERNAME.github.io/asc-unfiltered/`.
-
-GitHub Pages hosts the public website, but **does not provide a database or secure admin accounts**. Complete the next section to make student submissions work across phones.
-
-## 3. Connect a real database and moderated admin account (Supabase)
-
-The frontend is already wired for Supabase. The SQL file sets up **Row Level Security (RLS)** so anonymous visitors can send **pending** submissions but cannot publish their own stories, see pending stories, or edit content. Only an authorized admin can moderate.
-
-1. Visit [supabase.com](https://supabase.com/) and create a project.
-2. Open **SQL Editor** → new query, paste the full content of `database/schema.sql`, and run it once.
-3. Open **Authentication → Users**, create your own admin account with a strong password, and **copy the user's UUID**. The Supabase dashboard may label this **Add user**.
-4. Back in **SQL Editor**, run this with the actual UUID:
-
-```sql
-insert into public.site_admins (user_id)
-values ('PASTE-YOUR-ADMIN-USER-UUID-HERE')
-on conflict (user_id) do nothing;
-```
-
-5. Find the **Project URL** and **publishable key** (or older public `anon` key) in **Project Settings → API / API Keys**.
-6. Edit `js/config.js`:
-
-```js
-export const CONFIG = {
-  supabaseUrl: 'https://YOUR-PROJECT.supabase.co',
-  supabaseAnonKey: 'YOUR_PUBLIC_PUBLISHABLE_OR_ANON_KEY',
-  instagramUrl: 'https://www.instagram.com/asc.unfiltered/',
-  siteTitle: 'ASC UNFILTERED',
-};
-```
-
-7. Save `js/config.js` and commit it to GitHub. GitHub Pages will deploy the updated website. Go to your site and confirm that the header says **LIVE COMMUNITY**. Sign in at `/admin.html` using your admin email and password.
-8. Make a test confession from one browser. Open `admin.html`, approve it, then refresh the main page in another browser. It should appear for both users.
-
-**Key security rule:** The public **publishable/anon** key is allowed in a frontend because the database RLS restricts access. **NEVER** put a Supabase `service_role`, secret key, or admin password into `config.js` or GitHub.
-
-## 4. Daily workflow
-
-- A student chooses **Enter the Vault**, selects Confession, Meme, Campus Tea, Question or Media, and submits text plus an optional HTTPS media link.
-- Their post stays `pending`; nobody else sees it.
-- You sign in to `admin.html`, check the **Pending** tab, and click **Approve** or **Reject**.
-- Approved posts appear in the public feed. The **Published** tab can unpublish them.
-- Students can report an approved post. You can review and clear reports in the **Reports** tab.
-- Use **+ New Post** for your own college updates, captions and reels. Use **Polls** to create or close poll questions.
-
-**Images & reels:** The initial version accepts **URLs**, not file uploads. For photos, use a public direct HTTPS image URL (e.g. ending in `.jpg`, `.png` or `.webp`). Reel links appear as clickable links rather than embedded video. To publish an image you own, you can also upload it to your GitHub repository's `assets` directory and use its full public GitHub Pages image URL.
-
-## 5. Personalization
-
-- Change Instagram account link: `js/config.js` → `instagramUrl`.
-- Change brand colors, fonts and mobile layout: `css/styles.css`.
-- Change the homepage sections, text and disclaimer: `index.html`.
-- Replace the supplied assets: `assets/campus.webp`, `assets/masked-admin.webp`.
-- Change demo example posts and demo poll: `js/data.js` (only for local demo).
-- To update the favicon replace `assets/favicon.svg`.
-
-## 6. Important launch and safety notes
-
-- The submission form **does not request a student's name or account**, but neither GitHub Pages nor third-party services provide a guarantee of absolute anonymity. Do not promise total anonymity or privacy beyond this design.
-- Remove bullying, doxxing, private chat screenshots, identifiable gossip, defamation and allegations about real people. Publish only appropriate, approved content with permission.
-- The public submission and report endpoints are intentionally open to anonymous visitors. **Before a large public launch**, add CAPTCHA, bot protection and server-side rate limits (such as via Supabase Edge Functions or a similar backend) to prevent spam and denial of service.
-- **Poll voting is limited only once per browser via local storage**. This is convenient but is not a fraud-resistant voting system. Users can clear browser storage or switch browsers; don't use results as official surveys.
-- URLs may link to external websites. Review submitted links carefully before approving.
-- GitHub Pages and public source repositories are visible to others. Only public project settings belong in the repository.
-- Edit or withdraw submitted content when requested and follow applicable privacy policies and laws.
-- The demo mode's admin area has no authentication. **Never rely on that mode for public submissions**.
-
-## Project structure
+Upload the **CONTENTS** of this ZIP directly to the **top level (root)** of the `asc-unfiltered` repository. **Do not upload the ZIP itself or an enclosing folder.**
 
 ```text
-asc-unfiltered/
-├── index.html              Public student website
-├── admin.html              Admin moderation dashboard
-├── css/styles.css          Responsive design
-├── js/config.js            Site and Supabase settings
-├── js/data.js              Demo examples and utility functions
-├── js/service.js           Supabase + demo data handling
-├── js/app.js               Public site features
-├── js/admin.js             Admin dashboard features
-├── assets/campus.webp      Supplied college photograph
-├── assets/masked-admin.webp Supplied masked-admin art
-├── assets/favicon.svg      Site icon
-├── database/schema.sql     Supabase database and RLS
-└── .nojekyll               GitHub Pages compatibility
+asc-unfiltered/                <-- your GitHub repository
+├── index.html                <-- HOME PAGE: GitHub opens this first
+├── feed.html                 <-- THE FEED
+├── vault.html                <-- ANONYMOUS CONFESSIONS
+├── memes.html                <-- MEMES
+├── polls.html                <-- POLLS
+├── diaries.html              <-- CAMPUS DIARIES
+├── tea.html                  <-- CAMPUS TEA
+├── ask.html                  <-- ASK THE MASK
+├── admin.html                <-- ADMIN DASHBOARD
+├── assets/
+│   ├── campus.webp
+│   ├── masked-admin.webp
+│   └── favicon.svg
+├── js/
+│   ├── site.js               <-- shared page behavior
+│   ├── admin.js
+│   ├── config.js
+│   ├── data.js
+│   └── service.js
+├── database/
+│   └── schema.sql
+├── .nojekyll
+├── README.md
+└── START_HERE.txt
 ```
 
-Built as a static site that works on GitHub Pages. No React, npm or compilation required.
+**The file order in the GitHub file list does not matter.** GitHub opens `index.html` first because that name is the default homepage. The other pages open when clicked.
+
+## EASY WAY TO REPLACE THE OLD WEBSITE (NO DELETING THE REPOSITORY)
+
+1. Download and **Extract All** from `ASC-Unfiltered-Multipage-GitHub.zip`.
+2. Open the extracted `ASC-Unfiltered-Multipage` folder. Inside, you should see `index.html`, `feed.html`, etc.
+3. Go to https://github.com/ascunfiltered79-afk/asc-unfiltered
+4. Click **Add file → Upload files**.
+5. Select everything **inside** the extracted folder (Ctrl+A), including the `assets`, `js`, and `database` folders, and drag it onto GitHub.
+6. GitHub recognizes existing file paths and updates them; new HTML pages are added. Choose **Commit changes**.
+7. GitHub **Settings → Pages**: set Deploy from a branch, branch `main`, folder `/(root)`, and leave Custom domain blank.
+8. After deployment, visit https://ascunfiltered79-afk.github.io/asc-unfiltered/ and press Ctrl+Shift+R if you see a cached version.
+
+If GitHub web upload refuses replacement of same-name files, open `index.html` on GitHub, click the pencil Edit button, paste the updated file content and Commit; then repeat for `admin.html`. Most normal GitHub upload flows do allow committing updated files.
+
+## Styling reliability
+
+All public pages include the CSS inside their own `<style>` block. They **do not depend on a separate `css/styles.css` path**. `admin.html` also has embedded CSS. This avoids the missing stylesheet problem from the earlier version.
+
+## DEMO versus LIVE
+
+When `js/config.js` contains blank Supabase settings, the site runs in **local demo mode**: fake sample posts appear in Feed; user submissions, poll votes, approvals and new posts are stored only in the current browser. **Other students on other devices will not be able to submit into your queue until you connect Supabase.** The demo Admin page is NOT password protected.
+
+For real shared submissions, private moderation, voting and reporting:
+
+1. Create a Supabase project at https://supabase.com
+2. Run the SQL in `database/schema.sql` in Supabase's SQL Editor. Review and understand the policies before launching.
+3. Create your own admin account in Supabase Authentication, then add its user ID to the `site_admins` table as described in the schema and original README.
+4. In `js/config.js`, fill `supabaseUrl` and the **public anon/publishable key only**. NEVER put a secret/service_role key into frontend JavaScript or GitHub.
+5. Upload and commit the edited `js/config.js`.
+6. Test submission on one device and admin approval on another, and test reporting / moderation, before inviting students.
+
+## Content and safety
+
+This unofficial student site should never publish private details, accusations, bullying, or photos without consent. Student submissions go through admin approval. The website makes clear it is not affiliated with the college. Direct file uploads are not implemented, only external HTTPS media links.
